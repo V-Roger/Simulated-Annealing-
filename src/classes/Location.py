@@ -5,23 +5,23 @@
 
 from math import sin, cos, sqrt, atan2, radians
 
-class Location:
+class Location(object):
 
     def __init__(self, _id, _long, _lat):
-        self.id = _id
+        self.idLoc = _id
         self.longitude = _long
         self.latitude = _lat
 
-    def getId():
-        return self.id
+    def getId(self):
+        return self.idLoc
 
-    def getLongitude():
+    def getLongitude(self):
         return self.longitude
 
-    def getLatitude():
+    def getLatitude(self):
         return self.latitude
 
-    def getDistanceTo(there):
+    def getDistanceTo(self, there):
 
         # approximate radius of the earth (in km)
         R = 6373.0

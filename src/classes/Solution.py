@@ -10,25 +10,31 @@ class Solution:
 	def __init__(self, _sc = []):
 		self.solutionCenters = _sc
 
-	def getValue():
+	def getValue(self):
 		value = 0.0
 		for center in self.solutionCenters:
 			value += center.getCost()
 
 		return value
 
-	def addSolutionCenter(_sc):
-		if !_sc in self.solutionCenters:
+	def getSolutionCenters(self):
+		return self .solutionCenters
+
+	def addSolutionCenter(self, _sc):
+		if _sc not in self.solutionCenters:
 			self.solutionCenters.append(_sc)
 
-	def generateNeighbour():
-		neighbour = Solution(self.solutionCenters)
+	def generateNeighbour(self):
+		neighbour = Solution(list(self.solutionCenters))
 		
 		randomOriginCenter = random.choice(neighbour.solutionCenters)
+		while len(randomOriginCenter.agencies) == 0:
+			randomOriginCenter = random.choice(neighbour.solutionCenters)
+
 		furthestAgency = randomOriginCenter.popAgency()
 		
 		randomTargetCenter = random.choice(neighbour.solutionCenters)
-		while !randomTargetCenter.canAddAgency(furthestAgency):
+		while not randomTargetCenter.canAddAgency(furthestAgency):
 			randomTargetCenter = random.choice(neighbour.solutionCenters)
 
 		randomTargetCenter.addAgency(furthestAgency)

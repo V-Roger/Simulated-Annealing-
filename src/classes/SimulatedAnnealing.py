@@ -3,14 +3,18 @@
 # Provides the algorithm to perform a simulated annealing search
 #----------------------
 
+import random
+import math
+
 class SimulatedAnnealing:
 
 	# _initialTemp : 
 	# _nbTempChanges : 
 	# _nbSteps : 
-	def run(_start, _initialTemp, _nbTempChanges, _nbSteps):
+	def run(self, _start, _initialTemp, _nbTempChanges, _nbSteps):
 		solMin = current = _start
 		minValue = currentValue = _start.getValue()
+		temperature = _initialTemp
 
 		for i in range(0, _nbTempChanges):
 
@@ -36,11 +40,11 @@ class SimulatedAnnealing:
 
 			# endfor j
 
-			self.tempDecayal()
+			# self.tempDecayal()
 
 		# endfor i
 
 		return solMin
 	
 	# Temperature decayal function
-	def tempDecayal():
+	# def tempDecayal(self):

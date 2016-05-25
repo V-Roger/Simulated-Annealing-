@@ -13,46 +13,50 @@ class SolutionCenter:
         self.nbTrainees = 0
         self.value = 0.0
 
-    def getAgencies():
+    def getCenter(self):
+        return self.center
+
+    def getAgencies(self):
         return self.agencies
 
     # adds an agency in the list, sorted by distance from the training center (ASC)
-    def addAgency(_a):
+    def addAgency(self, _a):
         if self.canAddAgency(_a):
             idx = 0
-            idMax = len(self.agencies)
-            while (idx < idMax) && (_a.getDistanceTo(self.center) < self.agencies[idx].getDistanceTo(self.center)):
-                idx++
+            idMax = len(self.agencies) - 1
+            if(idMax > 0) :
+                while (idx < idMax) & (_a.getDistanceTo(self.center) < self.agencies[idx].getDistanceTo(self.center)):
+                    idx += 1
 
             self.agencies.insert(idx, _a)
-            self.nbTrainees += _a.getNbTrainees
+            self.nbTrainees += _a.getNbTrainees()
             self.updateValue(_a)
 
-    def removeAgency(_a):
+    def removeAgency(self, _a):
         if _a in self.agencies:
             self.agencies.remove(_a)     
-            self.nbTrainees -= _a.getNbTrainees
+            self.nbTrainees -= _a.getNbTrainees()
             self.updateValue(_a, -1)
 
-    def canAddAgency(_a):
-        return ((self.nbTrainees + _a.nbTrainees) <= self.center.MAX_TRAINEES) && (!_a in self.agencies)
+    def canAddAgency(self, _a):
+        return ((self.nbTrainees + _a.nbTrainees) <= self.center.MAX_TRAINEES) & (_a not in self.agencies)
 
     # removes the agency furthest away from the training center and returns it
-    def popAgency():
+    def popAgency(self):
         agency = self.agencies.pop()
         self.updateValue(agency, -1)
-        self.nbTrainees -= agency.nbTrainees
+        self.nbTrainees -= agency.getNbTrainees()
         return agency
 
-    def getNbTrainees():
+    def getNbTrainees(self):
         return self.nbTrainees
 
-    def getValue():
+    def getValue(self):
         return self.value
 
-    def updateValue(_a, sign = 1):
-        self.value = self.value + sign * (_a.getNbTrainees * COST_BY_KM  * _a.getDistanceTo(self.center))
+    def updateValue(self, _a, sign = 1):
+        self.value = self.value + sign * (_a.getNbTrainees() * self.COST_BY_KM  * _a.getDistanceTo(self.center))
 
-    def getCost():
-        return self.value == 0.0 ? self.value : self.center.BASE_COST + self.value
+    def getCost(self):
+        return self.value if self.value == 00 else self.center.BASE_COST + self.value
 
