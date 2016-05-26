@@ -118,7 +118,8 @@ for center in centers:
 sa = SimulatedAnnealing()
 
 t0 = time()
-optimisedSolution = sa.run(startSolution, 0.5, 500, 10)
+optimisedSolution = sa.run(startSolution, 1, 50, 10000)
+
 t1 = time()
 print optimisedSolution.getValue()
 print 'Execution time: %f' %(t1-t0)
