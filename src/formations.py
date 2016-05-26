@@ -15,6 +15,7 @@ import random as random
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+from time import time
 
 
 def readAgencies():
@@ -100,16 +101,17 @@ for center in centers:
 	solutionCenter = SolutionCenter(center)
 	if len(agencies) > 0:
 		agency = agencies.pop()
-		print agency.getId()
 		solutionCenter.addAgency(agency)
 
 	startSolution.addSolutionCenter(solutionCenter)
 
 sa = SimulatedAnnealing()
 
+t0 = time()
 optimisedSolution = sa.run(startSolution, 0.5, 500, 10)
-
+t1 = time()
 print optimisedSolution.getValue()
+print 'Execution time: %f' %(t1-t0)
 
 displayMap(optimisedSolution)
 
