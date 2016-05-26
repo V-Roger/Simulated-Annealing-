@@ -4,6 +4,7 @@
 #------------
 
 import random
+import copy
 
 class Solution:
 
@@ -25,7 +26,7 @@ class Solution:
             self.solutionCenters.append(_sc)
 
     def generateNeighbour(self):
-        neighbour = Solution(list(self.solutionCenters))
+        neighbour = copy.deepcopy(self)
         
         randomOriginCenter = random.choice(neighbour.solutionCenters)
         while len(randomOriginCenter.agencies) == 0:

@@ -11,6 +11,7 @@ from classes.Solution import Solution
 from classes.SolutionCenter import SolutionCenter
 from classes.SimulatedAnnealing import SimulatedAnnealing
 
+import copy as copy
 import random as random
 import numpy as np
 import matplotlib.pyplot as plt
@@ -79,7 +80,7 @@ def displayMap(solution):
                   llcrnrlat = 40,               # lower-left corner latitude
                   urcrnrlon = 10,               # upper-right corner longitude
                   urcrnrlat = 55,               # upper-right corner latitude
-                  resolution = 'c',
+                  resolution = 'f',
                   area_thresh = 100000.0,
                   )
 
@@ -107,18 +108,27 @@ agencies = readAgencies()
 centers = readCenters()
 startSolution = Solution()
 
+startAgencies = copy.deepcopy(agencies)
+
 for center in centers:
     solutionCenter = SolutionCenter(center)
-    if len(agencies) > 0:
-        agency = agencies.pop()
-        solutionCenter.addAgency(agency)
-    #endif
     startSolution.addSolutionCenter(solutionCenter)
+
+while len(startAgencies) > 0:
+    agency = random.choice(startAgencies)
+    startAgencies.remove(agency)
+
+    startAgencies = copy.deepcopy(startAgencies)
+
+    solutionCenter = random.choice(startSolution.getSolutionCenters())
+
+    solutionCenter.addAgency(agency)
+#endwhile
 
 sa = SimulatedAnnealing()
 
 t0 = time()
-optimisedSolution = sa.run(startSolution, 1, 50, 10000)
+optimisedSolution = sa.run(startSolution, 5, 100, 100)
 
 t1 = time()
 print optimisedSolution.getValue()

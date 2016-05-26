@@ -27,7 +27,7 @@ class SimulatedAnnealing:
                 
                 if delta <= 0:
                 # new is a better solution than current
-                    current = new
+                    current = copy.deepcopy(new)
                     currentValue = newValue
                     if currentValue <= minValue:
                         minValue = currentValue
@@ -41,9 +41,9 @@ class SimulatedAnnealing:
 
             # endfor j
 
-            print minValue
-
             temperature = self.tempDecayal(temperature)
+
+            print current.getValue()
 
         # endfor i
 
@@ -51,4 +51,4 @@ class SimulatedAnnealing:
     
     # Temperature decayal function
     def tempDecayal(self, _t):
-        return 0.95 * _t
+        return 0.99 * _t
