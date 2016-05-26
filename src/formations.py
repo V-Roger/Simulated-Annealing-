@@ -108,10 +108,10 @@ centers = readCenters()
 startSolution = Solution()
 
 for center in centers:
-	solutionCenter = SolutionCenter(center)
-	if len(agencies) > 0:
-		agency = agencies.pop()
-		solutionCenter.addAgency(agency)
+    solutionCenter = SolutionCenter(center)
+    if len(agencies) > 0:
+        agency = agencies.pop()
+        solutionCenter.addAgency(agency)
     #endif
     startSolution.addSolutionCenter(solutionCenter)
 
