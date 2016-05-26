@@ -100,7 +100,7 @@ for center in centers:
 	solutionCenter = SolutionCenter(center)
 	if len(agencies) > 0:
 		agency = agencies.pop()
-		print agency.getId
+		print agency.getId()
 		solutionCenter.addAgency(agency)
 
 	startSolution.addSolutionCenter(solutionCenter)
@@ -112,3 +112,27 @@ optimisedSolution = sa.run(startSolution, 0.5, 500, 10)
 print optimisedSolution.getValue()
 
 displayMap(optimisedSolution)
+
+#build worst solution for comparison
+agencies = readAgencies()
+worstSolution = Solution()
+for center in centers:
+    solutionCenter = SolutionCenter(center)
+    worstSolution.addSolutionCenter(solutionCenter)
+#endfor
+
+for agency in agencies:
+    furthestSolutionCenter = None
+    furthestDist = 0
+    for solutionCenter in worstSolution.getSolutionCenters():
+        if solutionCenter.canAddAgency(agency) & (agency.getDistanceTo(solutionCenter.getCenter()) > furthestDist):
+            if not furthestSolutionCenter is None:
+                furthestSolutionCenter.removeAgency(agency)
+            #endif
+            solutionCenter.addAgency(agency)
+            furthestDist = agency.getDistanceTo(solutionCenter.getCenter())
+        #endif
+    #endfor 
+#endfor
+
+print worstSolution.getValue()
