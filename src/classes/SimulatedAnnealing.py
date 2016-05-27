@@ -9,10 +9,16 @@ import copy
 
 class SimulatedAnnealing:
 
+    def __init__(self):
+        self.log = []
+
+    def getLog(self):
+        return self.log
+
     # _initialTemp : 
     # _nbTempChanges : 
     # _nbSteps : 
-    def run(self, _start, _initialTemp, _nbTempChanges, _nbSteps):
+    def run(self, _start, _initialTemp, _nbTempChanges, _nbSteps, _neighbourGeneration):
         solMin = current = _start
         minValue = currentValue = _start.getValue()
         temperature = _initialTemp
@@ -21,9 +27,11 @@ class SimulatedAnnealing:
 
             for j in range(0, _nbSteps):
 
-                new = current.generateNeighbour()
+                new = current.generateNeighbour(_neighbourGeneration)
                 newValue = new.getValue()
                 delta = newValue - currentValue
+
+                self.log.append(newValue)
                 
                 if delta <= 0:
                 # new is a better solution than current
@@ -51,4 +59,4 @@ class SimulatedAnnealing:
     
     # Temperature decayal function
     def tempDecayal(self, _t):
-        return 0.99 * _t
+        return 0.95 * _t

@@ -73,14 +73,12 @@ def displayMap(solution):
             for agency in center.getAgencies():
                 solutionAgenciesMap = np.append(solutionAgenciesMap, np.array([tuple([agency.getLatitude(), agency.getLongitude(), 10.0, color])], dtype=dType.dtype))
 
-    fig = plt.figure()
-
     themap = Basemap(projection='gall',
                   llcrnrlon = -5,              # lower-left corner longitude
                   llcrnrlat = 40,               # lower-left corner latitude
                   urcrnrlon = 10,               # upper-right corner longitude
                   urcrnrlat = 55,               # upper-right corner latitude
-                  resolution = 'f',
+                  resolution = 'c',
                   area_thresh = 100000.0,
                   )
 
@@ -128,7 +126,11 @@ while len(startAgencies) > 0:
 sa = SimulatedAnnealing()
 
 t0 = time()
-optimisedSolution = sa.run(startSolution, 5, 100, 100)
+optimisedSolution = sa.run(startSolution, 2, 35, 300, 5)
+
+plt.plot(sa.getLog())
+
+plt.show()
 
 t1 = time()
 print optimisedSolution.getValue()
@@ -137,25 +139,25 @@ print 'Execution time: %f' %(t1-t0)
 displayMap(optimisedSolution)
 
 #build worst solution for comparison
-agencies = readAgencies()
-worstSolution = Solution()
-for center in centers:
-    solutionCenter = SolutionCenter(center)
-    worstSolution.addSolutionCenter(solutionCenter)
-#endfor
+# agencies = readAgencies()
+# worstSolution = Solution()
+# for center in centers:
+#     solutionCenter = SolutionCenter(center)
+#     worstSolution.addSolutionCenter(solutionCenter)
+# #endfor
 
-for agency in agencies:
-    furthestSolutionCenter = None
-    furthestDist = 0
-    for solutionCenter in worstSolution.getSolutionCenters():
-        if solutionCenter.canAddAgency(agency) & (agency.getDistanceTo(solutionCenter.getCenter()) > furthestDist):
-            if not furthestSolutionCenter is None:
-                furthestSolutionCenter.removeAgency(agency)
-            #endif
-            solutionCenter.addAgency(agency)
-            furthestDist = agency.getDistanceTo(solutionCenter.getCenter())
-        #endif
-    #endfor 
-#endfor
+# for agency in agencies:
+#     furthestSolutionCenter = None
+#     furthestDist = 0
+#     for solutionCenter in worstSolution.getSolutionCenters():
+#         if solutionCenter.canAddAgency(agency) & (agency.getDistanceTo(solutionCenter.getCenter()) > furthestDist):
+#             if not furthestSolutionCenter is None:
+#                 furthestSolutionCenter.removeAgency(agency)
+#             #endif
+#             solutionCenter.addAgency(agency)
+#             furthestDist = agency.getDistanceTo(solutionCenter.getCenter())
+#         #endif
+#     #endfor 
+# #endfor
 
-print worstSolution.getValue()
+# print worstSolution.getValue()
