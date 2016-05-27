@@ -119,14 +119,16 @@ while len(startAgencies) > 0:
     startAgencies = copy.deepcopy(startAgencies)
 
     solutionCenter = random.choice(startSolution.getSolutionCenters())
-
+    while not solutionCenter.canAddAgency(agency):
+        solutionCenter = random.choice(startSolution.getSolutionCenters())
+            
     solutionCenter.addAgency(agency)
 #endwhile
 
 sa = SimulatedAnnealing()
 
 t0 = time()
-optimisedSolution = sa.run(startSolution, 2, 35, 300, 5)
+optimisedSolution = sa.run(startSolution, 2, 50, 500, 5)
 
 plt.plot(sa.getLog())
 
