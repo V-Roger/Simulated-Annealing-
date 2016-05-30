@@ -1,3 +1,4 @@
+# -*-coding:Latin-1 -*
 # formations.py
 #--------------
 # Uses simulated annealing to solve a problem associating a large number of agencies 
@@ -128,7 +129,7 @@ while len(startAgencies) > 0:
 sa = SimulatedAnnealing()
 
 t0 = time()
-#solution initiale, température initiale, nombre de changement de température, nombre d'itération par palier de température, nombre maximum d'agences à enlever d'un centre,µ
+#solution initiale, temperature initiale, nombre de changement de temperature, nombre d'iteration par palier de temperature, nombre maximum d'agences à enlever d'un centre,mu
 optimisedSolution = sa.run(startSolution, 2, 50, 500, 5, 0.95)
 
 plt.plot(sa.getLog())
