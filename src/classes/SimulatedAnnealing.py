@@ -51,7 +51,7 @@ class SimulatedAnnealing:
 
             temperature = self.tempDecayal(temperature)
 
-            print current.getValue()
+            #print current.getValue()
 
         # endfor i
 

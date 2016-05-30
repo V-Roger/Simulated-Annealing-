@@ -101,9 +101,17 @@ def displayMap(solution):
 
     plt.show()
 
-
+print 'Load agencies ...'
 agencies = readAgencies()
+number = 0
+for agency in agencies:
+    number += agency.getNbTrainees()
+print('{numberAgencies} agencies loaded with {numberTrainees} trainees'.format(numberAgencies=len(agencies), numberTrainees=number))
+print 'Load centers ...'
 centers = readCenters()
+print('{numberCenters} centers loaded'.format(numberCenters=len(centers)))
+
+print 'Initialization ...'
 startSolution = Solution()
 
 startAgencies = copy.deepcopy(agencies)
@@ -124,21 +132,34 @@ while len(startAgencies) > 0:
             
     solutionCenter.addAgency(agency)
 #endwhile
-
+initialTemp = 10
+nbTempChanges = 50
+nbSteps = 100
+neighbourGeneration = 5
 sa = SimulatedAnnealing()
-
+print('Start simulated annealing with following parameters:\n Start temperature: {t0}\n # change of temperature: {tempChanges}\n # steps by temperature: {steps}\n Neighbouring factor: {neighbour}\n...'.format(
+    t0=initialTemp, tempChanges=nbTempChanges, steps=nbSteps, neighbour=neighbourGeneration
+))
 t0 = time()
-optimisedSolution = sa.run(startSolution, 2, 50, 500, 5)
+optimisedSolution = sa.run(startSolution, initialTemp, nbTempChanges, nbSteps, neighbourGeneration)
+t1 = time()
 
+print('End simulated annealing\nMinimum cost found: {solution}\nExecution time: {time}'.format(solution=optimisedSolution.getValue(), time=(t1-t0)))
 plt.plot(sa.getLog())
 
 plt.show()
-
-t1 = time()
-print optimisedSolution.getValue()
-print 'Execution time: %f' %(t1-t0)
-
 displayMap(optimisedSolution)
+
+numberAgencies = 0
+numberCenters = 0
+numberTrainees = 0
+for solutionCenter in optimisedSolution.getSolutionCenters():
+    if (solutionCenter.getNbTrainees() > 0):
+        numberCenters += 1
+        numberAgencies += len(solutionCenter.getAgencies())
+        numberTrainees += solutionCenter.getNbTrainees()
+
+print('{trainees} trainees from {agencies} agencies are dispatch in {centers} centers'.format(trainees=numberTrainees, agencies=numberAgencies, centers=numberCenters))
 
 #build worst solution for comparison
 # agencies = readAgencies()
