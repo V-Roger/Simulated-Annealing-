@@ -18,7 +18,7 @@ class SimulatedAnnealing:
     # _initialTemp : 
     # _nbTempChanges : 
     # _nbSteps : 
-    def run(self, _start, _initialTemp, _nbTempChanges, _nbSteps, _neighbourGeneration):
+    def run(self, _start, _initialTemp, _nbTempChanges, _nbSteps, _neighbourGeneration, _mu):
         solMin = current = _start
         minValue = currentValue = _start.getValue()
         temperature = _initialTemp
@@ -49,7 +49,7 @@ class SimulatedAnnealing:
 
             # endfor j
 
-            temperature = self.tempDecayal(temperature)
+            temperature = self.tempDecayal(temperature, _mu)
 
             print current.getValue()
 
@@ -58,5 +58,5 @@ class SimulatedAnnealing:
         return solMin
     
     # Temperature decayal function
-    def tempDecayal(self, _t):
-        return 0.95 * _t
+    def tempDecayal(self, _t, _mu):
+        return _mu * _t

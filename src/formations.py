@@ -128,7 +128,8 @@ while len(startAgencies) > 0:
 sa = SimulatedAnnealing()
 
 t0 = time()
-optimisedSolution = sa.run(startSolution, 2, 50, 500, 5)
+#solution initiale, température initiale, nombre de changement de température, nombre d'itération par palier de température, nombre maximum d'agences à enlever d'un centre,µ
+optimisedSolution = sa.run(startSolution, 2, 50, 500, 5, 0.95)
 
 plt.plot(sa.getLog())
 
