@@ -58,5 +58,5 @@ class SolutionCenter:
         self.value = self.value + sign * (_a.getNbTrainees() * self.COST_BY_KM  * _a.getDistanceTo(self.center))
 
     def getCost(self):
-        return self.value if self.value == 00 else self.center.BASE_COST + self.value
+        return self.value if self.value == 0.0 else self.center.BASE_COST + self.value
 
