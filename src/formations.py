@@ -79,7 +79,7 @@ def displayMap(solution):
                   llcrnrlat = 40,               # lower-left corner latitude
                   urcrnrlon = 10,               # upper-right corner longitude
                   urcrnrlat = 55,               # upper-right corner latitude
-                  resolution = 'c',
+                  resolution = 'f',
                   area_thresh = 100000.0,
                   )
 
@@ -133,11 +133,11 @@ while len(startAgencies) > 0:
             
     solutionCenter.addAgency(agency)
 #endwhile
-initialTemp = 10
-nbTempChanges = 50
-nbSteps = 100
+initialTemp = 2000
+nbTempChanges = 100
+nbSteps = 10
 neighbourGeneration = 5
-mu = 0.95
+mu = 0.70
 sa = SimulatedAnnealing()
 print('Start simulated annealing with following parameters:\n Start temperature: {t0}\n # change of temperature: {tempChanges}\n # steps by temperature: {steps}\n Mu (temperature decay): {mu}\n Neighbouring factor: {neighbour}\n...'.format(
     t0=initialTemp, tempChanges=nbTempChanges, steps=nbSteps, neighbour=neighbourGeneration, mu=mu
